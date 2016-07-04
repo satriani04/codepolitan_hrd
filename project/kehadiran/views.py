@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from karyawan.models import Karyawan
 from .models import Kehadiran,Izin
@@ -10,24 +11,46 @@ import json
 
 @login_required(login_url=settings.LOGIN_URL)
 def kehadiran_view(request):
-	daftar_hadir = Kehadiran.objects.filter(karyawan__id=request.session['karyawan_id']).order_by('waktu')
+	daftar_hadir_list = Kehadiran.objects.filter(karyawan__id=request.session['karyawan_id']).order_by('waktu')
 
 	if request.POST:
 		bulan = request.POST['bulan']
 		tahun = request.POST['tahun']
 
-		daftar_hadir = Kehadiran.objects.filter(waktu__year=tahun,waktu__month=bulan,karyawan__id=request.session['karyawan_id']).order_by('waktu')
+		daftar_hadir_list = Kehadiran.objects.filter(waktu__year=tahun,waktu__month=bulan,karyawan__id=request.session['karyawan_id']).order_by('waktu')
+
+	paginator = Paginator(daftar_hadir_list, 5) # Show 25 contacts per page
+
+	page = request.GET.get('page')
+	try:
+		daftar_hadir = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		daftar_hadir = paginator.page(1)
+	except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+		daftar_hadir = paginator.page(paginator.num_pages)
 
 	context = {
 		'daftar_hadir':daftar_hadir
 	}
-
 	return render(request,'kehadiran.html',context)
 
 @login_required(login_url=settings.LOGIN_URL)
 def izin_view(request):
-	izin = Izin.objects.filter(karyawan__id=request.session['karyawan_id'])
-	print(izin)
+	izin_list = Izin.objects.filter(karyawan__id=request.session['karyawan_id'])
+	paginator = Paginator(izin_list, 1) # Show 25 contacts per page
+
+	page = request.GET.get('page')
+	try:
+		izin = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		izin = paginator.page(1)
+	except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+		izin = paginator.page(paginator.num_pages)
+
 	context = {
 		'daftar_izin':izin
 	}

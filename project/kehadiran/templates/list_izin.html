@@ -53,6 +53,19 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
+                                <div class="pagination">
+                                    <span class="step-links">
+                                        {% if daftar_izin.has_previous %}
+                                            <a href="?page={{ daftar_izin.previous_page_number }}">previous</a>
+                                        {% endif %}
+                                        <span class="current">
+                                            Page {{ daftar_izin.number }} of {{ daftar_izin.paginator.num_pages }}.
+                                        </span>
+                                        {% if contacts.has_next %}
+                                            <a href="?page={{ daftar_izin.next_page_number }}">next</a>
+                                        {% endif %}
+                                    </span>
+                                </div>
                             </div>
                             <!-- /.table-responsive -->
                         </div>
