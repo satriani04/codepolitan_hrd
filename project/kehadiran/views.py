@@ -28,7 +28,7 @@ def izin_view(request):
 	izin = Izin.objects.filter(karyawan__id=request.session['karyawan_id'])
 	print(izin)
 	context = {
-		'izin':izin
+		'daftar_izin':izin
 	}
 	return render(request,'list_izin.html',context)
 

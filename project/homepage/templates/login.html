@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-<htmL>
-    <head>
-        <title>Mini HRD</title>
-    </head>
-    <body>
-        <h1>Silahkan Login</h1>
-        <form action="/login/" method="POST">
-            {% csrf_token %}
-
-            {% if messages %}
-              <ul>
-                {% for message in messages %}
-                  <li>{{ message }}</li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-
-            <p>Username: <input type="text" name="username" value="" placeholder="silahkan masukkan username..." /></p>
-            <p>Password: <input type="password" name="password" value="" placeholder="silahkan masukkan password..." /></p>
-            <p><input type="submit" value="Log In" /></p>
-        </form>
-    </body>
-</htmL>
+{% extends "layout/base-login.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Mini HRD - Silahkan Login</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="/login/" method="POST" role="form">
+                        {% csrf_token %}
+                        {% if messages %}
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <ul>
+                                    {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="username" value="" placeholder="silahkan masukkan username..." />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" name="password" value="" placeholder="silahkan masukkan password..." />
+                            </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" value="Log In" />
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+{% endblock %}

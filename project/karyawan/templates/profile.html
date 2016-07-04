@@ -1,24 +1,93 @@
-<!DOCTYPE html>
-<htmL>
-    <head>
-        <title>Mini HRD</title>
-    </head>
-    <body>
-        <h1>Silahkan Login</h1>
-        <form>
-            <h1>Profil Anda ({{ request.session.jenis_akun }})</h1>
-            <p>Hi, {{ request.session.username }}</p>
-            <p>Nama: {{ karyawan.nama }}</p>
-            <p>Alamat: {{ karyawan.alamat }}</p>
-            <p>Jenis Kelamin: {{ karyawan.jenis_kelamin }}</p>
-            <p>Jenis Karyawan: {{ karyawan.jenis_karyawan }}</p>
-            <p>No Telepon: {{ karyawan.no_telepon }}</p>
-            <p>Email: {{ karyawan.email }}</p>
-            <p>No Rekening: {{ karyawan.no_rekening }}</p>
-            <p>Pemilik Rekening: {{ karyawan.pemilik_rekening }}</p>
-            <p>Divisi: {{ karyawan.divisi.nama }}</p>
-            <p>Jabatan: {{ karyawan.jabatan.nama }}</p>
-            <p><a href="{% url 'logout' %}">Log out</a> | <a href="{% url 'kehadiran' %}">Kehadiran</a> | <a href="{% url 'izin' %}">list izin</a></p>
-        </form>
-    </body>
-</htmL>
+{% extends "layout/base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Profil</h1>
+            <ol class="breadcrumb" style="margin-bottom: 5px;">
+                <li class="active">Beranda</li>
+            </ol>
+            <br />
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Hi, {{ request.session.username }}
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td>Nama</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.nama }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alamat</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.alamat }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jenis Kelamin</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.jenis_kelamin }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jenis Karyawan</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.jenis_karyawan }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>No. Telepon</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.no_telepon }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>E-mail</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>No. Rekening</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.no_rekening }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pemilik Rekening</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.pemilik_rekening }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Divisi</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.divisi.nama }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jabatan</td>
+                                            <td style="width:10px;">:</td>
+                                            <td>{{ karyawan.jabatan.nama }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-8 -->
+    </div>
+    <!-- /.row -->
+{% endblock %}

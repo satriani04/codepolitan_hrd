@@ -20,6 +20,9 @@ from homepage.views import login_view, logout_view
 from karyawan.views import profil
 from kehadiran.views import kehadiran_view, pengajuan_izin, izin_view
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,3 +33,5 @@ urlpatterns = [
     url(r'^pengajuan-izin/$', pengajuan_izin, name='pengajuan-izin'),
     url(r'^izin/$', izin_view, name='izin'),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
