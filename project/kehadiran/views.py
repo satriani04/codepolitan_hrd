@@ -5,6 +5,7 @@ from django.conf import settings
 from karyawan.models import Karyawan
 from .models import Kehadiran,Izin
 from .forms import IzinForm
+import json
 # Create your views here.
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -53,3 +54,29 @@ def pengajuan_izin(request):
 		form = IzinForm()
 
 	return render(request,'tambah_izin.html',{'form':form})		
+
+@login_required(login_url=settings.LOGIN_URL)
+def report(request, bulan, tahun):
+	temp_chart_data = []
+	daftar_hadir = Kehadiran.objects.filter(waktu__year=tahun,waktu__month=bulan,karyawan__id=request.session['karyawan_id'])
+
+	temp_chart_data.append({"x":"hadir","a":daftar_hadir.filter(jenis_kehadiran='hadir').count()})
+	temp_chart_data.append({"x":"izin","a":daftar_hadir.filter(jenis_kehadiran='izin').count()})
+	temp_chart_data.append({"x":"cuti","a":daftar_hadir.filter(jenis_kehadiran='cuti').count()})
+
+	chart_data = json.dumps({"data":temp_chart_data})
+	print(chart_data)
+	context = {
+		'chart_data':chart_data,
+		'bulan':bulan,
+		'tahun':tahun
+	}
+
+	return render(request,'grafik.html',context)
+
+
+
+
+
+
+
